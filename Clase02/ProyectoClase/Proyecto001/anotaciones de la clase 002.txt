@@ -1,0 +1,108 @@
+docker run --rm -it -d holamundo
+docker exec -it b27f1a3c567f /bin/bash
+
+
+
+
+docker build -t miguelangeltimanapaz/holamundo:1.0 .
+
+docker login
+
+
+docker push miguelangeltimanapaz/holamundo:1.0
+
+de tarea se tiene que enviar el siguiente comando dependiendo de mi repositorio
+===============================================================================
+
+docker run -it miguelangeltimanapaz/holamundo:1.0
+
+(solo para que el profe los ejecute)
+
+
+
+/************************************************************************************/
+
+docker build -t holamundo .
+docker build : para construir imagen
+-t : el nombre de la imagen o tag de la imagen 
+.  : Directorio de trabajo o contexto (también puede ser una ruta especificada desde raiz, es la ruta donde va a ir a buscar el archivo de configuración de la construcción de la imagen)
+Dockerfile : nombre de archivo por defecto que busca docker build.
+
+/************************************************************************************/
+
+mv Dockerfile miDockFile.txt   (comando para cambiar nombre de archivo en linux)
+
+
+/************************************************************************************/
+docker build -t holamundo -f miDockFile.txt .    (en caso se quiere especificar un nombre de archivo y ya no se use el archivo por default DockerFile)
+
+
+
+/************************************************************************************/
+docker build -t holamundo .
+docker build : para construir imagen
+-t : el nombre de la imagen o tag de la imagen
+.  : Directorio de trabajo o contexto, no es desde donde estoy ejecutando necesariamente.
+Dockerfile : nombre de archivo por defecto que busca docker build.
+-f [NombreArchivo]  : en caso que desee especificar el archivo, ojo este esta dentro del directorio o contexto de trabajo.
+
+
+/************************************************************************************/
+chmod ugo+rwx docker-get-dockerfile.sh   (para dar permisos al archivo)
+
+
+/************************************************************************************/
+./docker-get-dockerfile.sh holamundo  (comando para ver lo que tiene adentro del DockerFile)
+
+
+
+/************************************************************************************/
+docker history golang
+docker history --no-trunc golang
+docker history --no-trunc golang > golang.txt
+
+/************************************************************************************/
+docker run -it -d -e ENVIRONMENT=DEV -e VALOR2=VALOR2  holamundo (para enviar paramaetros al DockerFile)
+
+
+/************************************************************************************/
+docker save alpine:latest | gzip > miaplinebackup.tar.gz   (para exportar una imgen)
+
+/************************************************************************************/
+
+
+ docker rmi alpine:latest  (eliminar imagen)
+
+/************************************************************************************/
+
+
+docker load -i miaplinebackup.tar.gz (para importar una imagen)
+
+
+PRACTICA DE PROYECTO EN CLASE
+/************************************************************************************/
+
+docker build -t miguelangeltimanapaz/dockerjava:1.0 -f DockerJava .
+docker run --rm -it -p 8080:8080  miguelangeltimanapaz/dockerjava:1.0
+docker push miguelangeltimanapaz/dockerjava:1.0
+
+/************************************************************************************/
+TAREA
+======
+docker run --rm -it -p 8080:8080 miguelangeltimanapaz/dockerjava:1.0 (entregar esta url)
+
+http://localhost:8080/sumar/2/4   se tiene que hacer una calculadora con suma resta, multiplicación
+http://localhost:8080/restart/2/4
+localhost:8080/multiplicar/2/4
+localhost:8080/dividir/2/4
+
+miguel.angel.timana.paz@everis.com
+
+/************************************************************************************/
+
+
+/************************************************************************************/
+
+
+
+/************************************************************************************/
