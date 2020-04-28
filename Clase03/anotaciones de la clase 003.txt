@@ -1,0 +1,81 @@
+/************************************************************************************/
+docker tag alpine:latest cursodockereveris2020.azurecr.io/mtimanap:1.0  (comando para tagear una imaven existente)
+/************************************************************************************/
+docker push cursodockereveris2020.azurecr.io/mtimanap:1.0 (para pushearlo a mi container registry de mi cuenta en azure)
+/************************************************************************************/
+docker run --rm -it alpine  =   docker create --rm -it alpine
+								docker start 25517652371
+/************************************************************************************/
+docker stop [id_container]  (detiene el contenedor, si al momento de crear el contenedor se indico el comando 
+							--rm(eliminar al detener), el contenedor no solo se va a detener sino también se va a eliminar)
+
+/************************************************************************************/
+docker pause 3b7c67d825c7   (para pausar un contenedor)
+docker unpause 3b7c67d825c7 (para reanudar, retirar la pausa)
+/************************************************************************************/
+docker kill 3b7c67d825c7  kill solo mata el contenedor, no lo elimina. mata el proceso
+/************************************************************************************/
+docker rm 3b7c67d825c7 elimina el contenedor
+/************************************************************************************/
+docker cp software.log 35a3682b2e40:/ (copio el archivo software.log en el contenedor 35a3682b2e40 en la ruta / )
+/************************************************************************************/
+docker exec 35a3682b2e40 ls / ejecutar un programa dentro del contenedor 35a3682b2e40 desde afuera(lista los archivos del contenedor que estén en la raiz, depende que el programa 'ls' exista dentro del contenedor )
+/************************************************************************************/
+docker cp 35a3682b2e40:/software.log . (copiar un archivo que se encuentra dentro de mi contenedor 35a3682b2e40 en la ruta /software.log, a mi máquina host en el directorio actual '.')
+/************************************************************************************/
+docker logs 35a3682b2e40 (para ver los log del contenendor 35a3682b2e40)
+/************************************************************************************/
+docker logs -f 35a3682b2e40 (para ver los log en linea (-f significa following), al ejecutarlo se va a quedar estancado la consola de comandoe esperando que suceda algún evento para pintarlo)
+/************************************************************************************/
+docker exec 35a3682b2e40 apk add bash (agregando bash a mi contenedor sin necesidad de entrar a mi contenedor)
+/************************************************************************************/
+docker exec -it 35a3682b2e40 /bin/bash  ejecutar el bash instalado en mi contenedor
+/************************************************************************************/
+docker exec 35a3682b2e40 apk add nano (agregando nano a mi contenedor sin necesidad de entrar a mi contenedor)
+/************************************************************************************/
+cat software.log (programa 'cat' para visualizar archivos)
+/************************************************************************************/
+docker commit 35a3682b2e40 weblogic:1.1 (si deseo convertir mi contenedor en una imagen, en el cual he trabajado y agregado cambios, se aplica el comando commit 
+										 y le pongo de nombre de imagen 'weblogic' con versión '1.1')
+										 
+										 
+										 
+/************************************************************************************/										 
+docker run -it --rm -p 5432:5432 -e PGDATA=/Postgres -e POSTGRES_PASSWORD=123456 --name mipostgres postgres	 
+									( -e es el comando para enviar variables de entorno, PGDATA(PGDATA es el directorio de data y POSTGRES_PASSWORD es el password que requiere Postgres))
+
+/************************************************************************************/
+docker run -it -p 8080:8080 --name mijboss  jboss/wildfly	(comando para crear contenedor wildfly)
+
+/************************************************************************************/
+docker run -it -p 8080:8080 --name mijboss --link mipostgres jboss/wildfly	( comando --link es para enlazar contenedores. se debe especificar el nombre del contenedor al cual deseamos enlazarnos )							
+
+/************************************************************************************/
+docker network create nombre_red
+docker run --net=mired -it --rm -p 5432:5432 -e PGDATA=/Postgres -e POSTGRES_PASSWORD=123456 --name mipostgres postgres
+docker run --net=mired -it --rm -p 8080:8080 --name mijboss jboss/wildfly
+(no se está colocando el comando -d porque este comando hace que no pinte el log mientras está levantando un contenedor)
+
+/************************************************************************************/
+iptables -A INPUT -i docker0 -j ACCEPT   (Te permite acceder a los recurso de tu equipos hosts)
+
+/************************************************************************************/
+ip route show (para ver la IP que representa a mi máquina dentro de mi container)
+
+Para el caso de windows 
+host.docker.internal -> localhost (en el archivo host de windows  C:/winwos/system32/hosts habría que ser la modificación 
+								   indicando el host interno de docker y mi localhost.host.docker.internal  localhost)
+/************************************************************************************/
+docker network ls   (para ver la red creada)
+
+/************************************************************************************/
+docker run -p 5000:5000 --restart=always --name registry -v 				(para ejecutar nuestro propio container registry)
+/home/mtimanap/WorkSpace/RegistryServer:/var/lib/registry registry:2
+
+/************************************************************************************/
+docker tag alpine localhost:5000/alpine:v1 (para tagear una imagen con el puerto 5000)
+docker push localhost:5000/alpine:v1	( para subirlo a nuestro container registry creado)
+docker pull localhost:5000/alpine:v1 (para descargar de mi container registry creado)
+
+/************************************************************************************/
+docker pull [ipservidor|dominio]:5000/alpine:v1

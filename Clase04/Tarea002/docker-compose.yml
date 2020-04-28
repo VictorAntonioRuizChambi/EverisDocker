@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+   app:
+      build:
+         context: .
+         dockerfile: development.DockerFile
+      ports: 
+         - "8081-8083:8080"
+      depends_on:
+         - db
+   db:
+      image: mongo
+      volumes:
+         - volumenMongo
+   lb:
+      image: dockercloud/haproxy
+      links:
+         - app
+      ports:
+         - "3011:80"
+      volumes:
+         - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+   volumenMongo:
+      name: dataMongo

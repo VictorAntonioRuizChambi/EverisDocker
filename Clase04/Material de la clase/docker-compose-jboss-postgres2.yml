@@ -1,0 +1,39 @@
+version: "3"
+services:
+   servidorBalanceador:
+      image: nginx:latest
+      volumes:
+         - ./nginx:/etc/nginx
+      depends_on:
+         - servidorApp
+      networks:
+         - netdev
+      ports:
+         - "8080:8080"
+   servidorApp:
+      build:
+         context: .
+         dockerfile: DockerfileWildfly
+      image: jboss/wildfly:custom
+      depends_on:
+         - baseDeDatos
+      networks:
+         - netdev
+      expose:
+         - "8080"
+#      ports:
+#         - "8080:8080"
+#         - "9990:9990"
+   baseDeDatos:
+      image: postgres:latest
+      volumes:
+         - /home/mtimanap/WorkSpace/Postgres:/Postgres
+      environment:
+         POSTGRES_PASSWORD: 123456
+         PGDATA: /Postgres
+      networks:
+         - netdev
+      ports:
+         - "5432:5432"
+networks:
+   netdev: {}

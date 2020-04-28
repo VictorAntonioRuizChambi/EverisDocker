@@ -1,0 +1,37 @@
+reset
+/**************************************************************************************************************/
+docker swarm init --advertise-addr 192.168.0.23
+
+/**************************************************************************************************************/
+Swarm initialized: current node (suz47hygabp9lreelp8xq3kx2) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-00o8cokoz7zekz5nz7b1ct7pparqyph2bcmfaun3b5b0zw9vxn-4olejvlx204g8nm9ix5fngcyj 192.168.0.48:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+/**************************************************************************************************************/
+docker node ls
+
+/**************************************************************************************************************/
+docker service create --name mitomcat --mode global -p 8080:8080 miguelangeltimanapaz/tomcat:1.0  (modo global es que se va a agregar el servicio en todos los nodos del swarm)
+
+/**************************************************************************************************************/
+docker service rm mitomcat
+
+/**************************************************************************************************************/
+docker service create --name mitomcat --replicas 2 -p 8080:8080 miguelangeltimanapaz/tomcat:1.0
+
+/**************************************************************************************************************/
+docker service scale mitomcat=13
+
+/**************************************************************************************************************/
+docker service update --image miguelangeltimanapaz/tomcat:2.0 mitomcat
+
+/**************************************************************************************************************/
+docker service update --rollback mitomcat
+
+/**************************************************************************************************************/
+docker service inspect --pretty mitomcat
+

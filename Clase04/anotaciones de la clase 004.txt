@@ -1,0 +1,68 @@
+nano docker-compose.yml
+/**************************************************************************************************************/
+docker-compose up (comando para ejecutar un docker compose)
+
+/**************************************************************************************************************/
+docker-compose up -d (se agrega el comando -d para  ocultar los log)
+
+/**************************************************************************************************************/
+docker network ls   (para ver la red creada al ejecutar el archivo docker-compose)
+
+/**************************************************************************************************************/
+docker network create hola (para crear una red)
+
+/**************************************************************************************************************/
+docker network rm idred (para eliminar una red)
+
+/**************************************************************************************************************/
+networks:						( para especificar el uso de una red que ha sido previamente creada )
+   default:
+      external:
+         name: mired
+		 
+/**************************************************************************************************************/
+docker-compose -f docker-compose-1.yml up -d	(para ejecutar un docker-compose que no tenga el nombre por default docker-compose)
+
+/**************************************************************************************************************/
+depends_on:						( para especificar dependencia de servicios, no implica que va a esperar al que termine de cargar el servicio 'DataBaseServer' para recien iniciar)
+    - DataBaseServer			( sino que primero se va a empezar a cargar la base de datos antes de empezar el servicio 'X' que depende del servicio 'DataBaseServer' )
+	
+/**************************************************************************************************************/
+docker-compose -f docker-compose-1.yml down			va a eliminar aquellos contenedores cuyos nombres estén asociados al nombre de la carpeta donde fue ejecutado el archivo
+													docker-compose y los nombres de los servicios que se especificaron en el nombre del archivo yaml que estamos indicando 
+													en este comando, que para este caso sería 'docker-compose-1.yml'
+													
+/**************************************************************************************************************/
+docker-compose -f docker-compose-loadbalancer.yml up --build -d   (para este caso se agrega el comando --build porque no se tiene una imagen construida, como para este caso
+																	estamos especificando un archivo DockerFile que es la especificación de una imagen personalizada, se requiere
+																	que esa imagen se reconstruya)
+
+para probar este ejemplo, Proyecto002 de la clase, se tiene que ejecutar la siguiente URL:
+http://localhost/sistema/hostname
+
+/**************************************************************************************************************/
+docker-compose -f docker-compose-loadbalancer.yml up --scale AppServer=5 -d    (comando para generar 5 replicas, para escalarlo 5 veces )
+
+/**************************************************************************************************************/
+tarea
+=====
+generar dos servicios y levantarlos con docker-compose
+ver una imagen y ver como se almacena la información
+aplicando
+que funcione y que levante
+si es que se puede que tenga volumenes
+
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/
+/**************************************************************************************************************/

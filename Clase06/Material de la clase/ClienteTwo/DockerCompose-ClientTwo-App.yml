@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+   Mysql:
+      image: mysql:latest
+      command: --default-authentication-plugin=mysql_native_password
+      ports:
+         - "3306:3306"
+      environment:
+         - MYSQL_USER=app
+         - MYSQL_PASSWORD=123456
+         - MYSQL_DATABASE=app
+         - MYSQL_ROOT_PASSWORD=123456
+      volumes:
+         - VolumeMysql:/var/lib/mysql
+         - ./Mysql-ClientTwo-App.sql:/docker-entrypoint-initdb.d/Mysql-ClientTwo-App.sql:ro
+   IbmMQ:
+      image: store/ibmcorp/mqadvanced-server-dev:9.1.2.0
+      ports:
+         - "1414:1414"
+         - "9443:9443"
+      environment:
+         - LICENSE=accept
+         - MQ_QMGR_NAME=QM1
+         - MQ_ADMIN_PASSWORD=12345678
+      volumes:
+         - VolumeIbmMQ:/mnt/mqm
+   Grafana:
+      image: grafana/grafana
+      ports:
+         - "3000:3000"
+   SonarQube:
+      image: sonarqube:latest
+      ports:
+         - "9000:9000"
+volumes:
+   VolumeMysql:
+      name: MysqlClientTwoApp
+   VolumeIbmMQ:
+      name: IbmMQCLientTwoApp

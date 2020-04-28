@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  AppServer:
+    build:
+      context: .
+      dockerfile: DockerfileWildfly
+    image: jboss/wildfly:custom
+    environment:
+      - VIRTUAL_HOST=localhost
+

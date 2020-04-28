@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+   AppServer:
+      image: jboss/wildfly:latest
+      ports:
+         - "8080:8080"
+   DataBaseServer:
+      image: postgres:latest
+      environment:
+         - POSTGRES_PASSWORD=123456
+      ports: 
+         - "5432:5432"
+      depends_on:
+         - AppServer
+networks:
+   default:
+      external:
+         name: mired
