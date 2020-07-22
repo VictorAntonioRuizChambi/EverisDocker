@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+   servidorBalanceador:
+      image: nginx:latest
+      volumes:
+         - ./nginx:/etc/nginx
+      depends_on:
+         - servidorApp
+      networks:
+         - netdev
+      ports:
+         - "8081:8080"
+   servidorApp:
+      image: jboss/wildfly:latest
+      depends_on:
+         - baseDeDatos
+      networks:
+         - netdev
+      expose:
+         - "8082"
+      ports:
+         - "8082:8080"
+         - "9990:9990"
+   baseDeDatos:
+      image: postgres:latest
+      volumes:
+         - /home/vruizcha/WorkSpace/Postgres:/Postgres
+      environment:
+         POSTGRES_PASSWORD: 123456
+         PGDATA: /Postgres
+      networks:
+         - netdev
+      ports:
+         - "5432:5432"
+networks:
+   netdev: {}

@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+   app:
+      image: victorruizchambi/app:1.0
+      ports: 
+         - "8081-8084:80"
+      depends_on:
+         - mock
+   mock:
+      image: victorruizchambi/mockup:1.0
+      ports:
+         - "8080:80"
+      volumes:
+         - volumenMock
+   prox:
+      image: dockercloud/haproxy
+      links:
+         - app
+      ports:
+         - "8085:80"
+      volumes:
+         - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+   volumenMock:
+      name: dataMockUp
